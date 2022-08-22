@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: what-is-my-pod
+  name: what-is-my-pod-deployment
+  namespace: clase2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: what-is-my-pod
+  template:
+    metadata:
+      labels:
+        app: what-is-my-pod
+    spec:
+      containers:
+        - env:
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+          image: ovhplatform/what-is-my-pod:1.0.1
+          imagePullPolicy: IfNotPresent
+          name: what-is-my-pod
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: '100Mi'
+              cpu: 10m
+            limits:
+              memory: '200Mi'
+              cpu: 50m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: what-is-my-pod
+  name: what-is-my-pod
+  namespace: clase2
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: what-is-my-pod
+  sessionAffinity: None
+  type: ClusterIP
