@@ -76,7 +76,12 @@ kubectl delete ns clase2
 #CREAR NAMESPACE DESDE YAML
 kubectl apply -f namespace.yaml
 kubectl apply -f .\service.yaml -n clase2
+
 # ejecuta un busybox en forma interactiva
-kubectl run -i --tty busybox --image=busybox --restart=Never -- sh
-curl -s ""
+kubectl run -i --tty busybox --image=busybox --restart=Never -n clase2 -- sh
+
+wget  -S -qO- http://service-example.clase2.svc.cluster.local && echo ""
+exit
+kubectl delete pod busybox
+kubectl delete pod busybox -n clase2
 ```
