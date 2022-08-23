@@ -13,8 +13,8 @@ Labs de la clase
 Secuencia de comandos para la demo
 
 ```bash
-# VER YAML DE CREACION DEL NAMESPACE arqwsii-2
-kubectl create ns arqwsii-2 --dry-run=client -o yaml
+# VER YAML DE CREACION DEL NAMESPACE clase2
+kubectl create ns clase2 --dry-run=client -o yaml
 
 #CREAR NAMESPACE DESDE YAML
 kubectl apply -f namespace.yaml
